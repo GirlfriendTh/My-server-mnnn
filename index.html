@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Kitty & Hikari SMP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init("Cs6x92dg36VoxF_5k");
+       })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+
+    <div id="disclaimer-screen">
+        <div class="disclaimer-content animate-pop">
+            <h2><i class="fas fa-exclamation-triangle" style="color: #F1C40F;"></i> ข้อสงวนสิทธิ์ (Disclaimer)</h2>
+            <p>
+                เซิร์ฟเวอร์ Minecraft นี้ไม่มีความเกี่ยวข้องกับ <strong>Sanrio</strong> และ <strong>Mojang</strong> แต่อย่างใด<br>
+                โปรเจกต์นี้ถูกสร้างขึ้นเพื่อความบันเทิงและคอมมูนิตี้เท่านั้น
+            </p>
+            <button id="btn-continue" class="mc-btn-primary">ดำเนินการต่อ (Continue)</button>
+        </div>
+    </div>
+
+    <div id="opening-screen" class="hidden">
+        <video id="opening-video" playsinline>
+            <source src="opening-video.mp4" type="video/mp4">
+        </video>
+        <button id="skip-intro-btn" class="skip-btn">SKIP >></button>
+    </div>
+
+    <div id="title-screen" class="hidden">
+        <video autoplay muted loop playsinline id="title-video-bg">
+            <source src="opening-video.mp4" type="video/mp4">
+        </video>
+        
+        <div class="title-wrapper">
+            <div class="logo-container">
+                <img src="crk-logo.png" alt="Server Logo" class="game-logo floating">
+            </div>
+             <div class="start-text-container">
+                 <p class="blink-text desktop-text"></p>
+                 <p class="blink-text mobile-text">Tap Screen to Start</p>
+            </div>
+        </div>
+        <div class="mc-tip-container"><span id="mc-tip-text" class="mc-tip-text">Tip: Loading...</span></div>
+        <div class="version-text">Launcher ver 1.0.0 | เซิร์ฟเวอร์ : Hello Kitty & Hikari SMP [TH]</div>
+    </div>
+
+    <div id="launcher-hub" class="hidden">
+        <nav class="launcher-sidebar">
+            <div class="profile-section" onclick="switchView('profile-settings')">
+                <img src="po.jpeg" id="sidebar-avatar-display" alt="Profile" class="profile-img">
+                <div class="profile-info">
+                    <span id="user-name-display">Guest Player</span>
+                    <span class="status-online">● Online</span>
+                </div>
+                <i class="fas fa-cog config-icon"></i>
+            </div>
+
+            <div class="sidebar-menu">
+                <button onclick="switchView('home-view')" class="menu-item"><i class="fas fa-home"></i> หน้าหลัก</button>
+                <button onclick="switchView('apply-form')" class="menu-item"><i class="fas fa-edit"></i> ข้อมูลเชื่อมต่อ (IP)</button>
+                <button onclick="switchView('rules')" class="menu-item"><i class="fas fa-scroll"></i> ใบสมัครผู้ดูแล</button>
+                <button onclick="switchView('store')" class="menu-item"><i class="fas fa-shopping-cart"></i> ร้านค้า</button>
+                <button onclick="switchView('topup-menu')" class="menu-item"><i class="fas fa-wallet"></i> เติมเครดิต</button>
+                <button onclick="switchView('game-selector')" class="menu-item"><i class="fas fa-gamepad"></i> เล่นมินิเกม</button>
+                <button onclick="switchView('news')" class="menu-item"><i class="fas fa-bullhorn"></i> ข่าวสาร</button>
+            </div>
+        </nav>
+
+        <main class="launcher-main">
+            
+            <section id="home-view" class="content-view">
+                <div class="hero-bg">
+                    <video autoplay muted loop playsinline class="home-video-bg">
+                        <source src="hello-kittys-fall-fiesta.1920x1080.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="bottom-action-bar">
+                    <div class="version-selector">
+                        <span>Version:</span>
+                        <select>
+                            <option>Hello Kitty & Hikari SMP (1.21.11)</option>
+                            <option>Minecraft (1.20.4)</option>
+                        </select>
+                    </div>
+                    <a href="https://discord.gg/mqrPJpbNhQ" target="_blank" class="mc-play-btn">
+                        เข้าสู่ DISCORD Hello Kitty & Hikari SMP
+                    </a>
+                </div>
+            </section>
+
+            <section id="rules" class="content-view info-paper hidden">
+                <button class="close-view-btn" onclick="switchView('home-view')">&times;</button>
+                <h2>ใบสมัครผู้ดูแลอาณาจักร</h2>
+                <div class="paper-inner text-center">
+                    <i class="fas fa-hard-hat fa-3x" style="color: #F1C40F; margin-bottom: 20px;"></i>
+                    <p>อะแฮ่ม เราจะเข้าสู่อีกหน้าเว็บนึงโปรดดำเนินการต่อเลย!</p>
+                    <button onclick="navigateGame('ad.html')" class="mc-btn-secondary mt-2">ดำเนินการต่อ</button>
+                </div>
+            </section>
+
+            <section id="apply-form" class="content-view info-paper hidden">
+                <button class="close-view-btn" onclick="switchView('home-view')">&times;</button>
+                <h2>ข้อมูลการเชื่อมต่อ (Server IP)</h2>
+                <div class="paper-inner">
+                    <p class="text-center" style="color: var(--mc-light-gray); margin-bottom: 20px;">
+                        เลือกช่องทางการเข้าเล่นที่เหมาะสมกับอุปกรณ์ของคุณ
+                    </p>
+
+                    <div class="connection-card" style="background: #1a1a1a; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid #3C8527;">
+                        <h3 style="color: #4CAF50;"><i class="fas fa-desktop"></i> Java Edition</h3>
+                        <p style="font-size: 14px; margin-top: 5px;">IP : <code>hellokittyhikari.mcsh.io</code></p>
+                        <p style="font-size: 12px; color: #888;">Version : 1.21.11</p>
+                    </div>
+
+                    <div class="connection-card" style="background: #1a1a1a; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid #2196F3;">
+                        <h3 style="color: #2196F3;"><i class="fas fa-mobile-alt"></i> Mobile (Bedrock)</h3>
+                        <p style="font-size: 14px; margin-top: 5px;">IP : <code>hellokittyhikari.mcsh.io</code></p>
+                        <p style="font-size: 14px; margin-top: 5px;">Port : <code>19132</code></p>
+                    </div>
+
+                    <div class="connection-card" style="background: #1a1a1a; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
+                        <h3 style="color: #FF9800;"><i class="fas fa-gamepad"></i> Console (Xbox/PS/Switch)</h3>
+                        <p style="font-size: 14px; margin-top: 5px;">ใช้แอป <strong>BedrockConnect</strong> เชื่อมต่อผ่าน IP : <code>(Soon)</code></p>
+                        <p style="font-size: 12px; color: #888;">*จำเป็นต้องตั้งค่า DNS ในเครื่องคอนโซล</p>
+                    </div>
+                    
+                    <div class="text-center mt-2">
+                        <button onclick="switchView('home-view')" class="mc-btn-primary">รับทราบ</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="game-selector" class="content-view info-paper hidden">
+                <button class="close-view-btn" onclick="switchView('home-view')">&times;</button>
+                <h2>เลือกมินิเกม</h2>
+                <div class="paper-inner grid-2">
+                    <button onclick="navigateGame('./PIU_HTML5/index.html')" class="mc-btn-secondary">
+                        <i class="fas fa-music"></i> PIU HTML5
+                    </button>
+                </div>
+            </section>
+
+            <section id="topup-menu" class="content-view info-paper hidden">
+                <button class="close-view-btn" onclick="switchView('home-view')">&times;</button>
+                <h2><i class="fas fa-wallet" style="color: #F1C40F;"></i> แจ้งเติมเครดิต (Top-up)</h2>
+                <div class="paper-inner">
+                    <div style="background: rgba(231, 76, 60, 0.1); border-left: 4px solid #E74C3C; padding: 10px 15px; margin-bottom: 20px; border-radius: 4px;">
+                        <p style="font-size: 13px; color: #E74C3C; margin: 0;">
+                            <strong>⚠️ คำเตือน:</strong> หากทำรายการเกิน 10 นาทีหลังจากเวลาที่โอนเงินสำเร็จ คุณจะไม่ได้รับเครดิต และระบบจะปฏิเสธรายการซ้ำ
+                        </p>
+                    </div>
+
+                    <div class="dark-card" style="background: #1a1a1a; padding: 15px; border-radius: 4px; border-left: 4px solid #F1C40F; margin-bottom: 20px;">
+                        <h3 style="color: #F1C40F; font-size: 16px; margin-bottom: 12px;"><i class="fas fa-university"></i> ช่องทางการชำระเงิน</h3>
+                        <p style="font-size: 14px; margin-bottom: 4px; color: #fff;">
+                            <strong>ธนาคาร :</strong> กสิกรไทย (k plus)
+                        </p>
+                        <p style="font-size: 16px; margin-bottom: 12px; color: #4CAF50; font-family: monospace; font-weight: bold; letter-spacing: 0.5px;">
+                            193-3-36298-8
+                        </p>
+                        <hr style="border: 0; border-top: 1px solid #333; margin: 10px 0;">
+                        <p style="font-size: 14px; margin-bottom: 4px; color: #fff;">
+                            <strong>TrueMoney Wallet :</strong> เติมผ่านเบอร์
+                        </p>
+                        <p style="font-size: 16px; margin-bottom: 12px; color: #2196F3; font-family: monospace; font-weight: bold; letter-spacing: 0.5px;">
+                            080-853-5095
+                        </p>
+                        <hr style="border: 0; border-top: 1px solid #333; margin: 10px 0;">
+                        <p style="font-size: 14px; color: #E0E0E0; margin: 0;">
+                            <strong>ชื่อบัญชี :</strong> เมธัส ถู่สอน
+                        </p>
+                    </div>
+                    
+                    <label style="color: var(--mc-white); font-size: 13px; display:block; margin-bottom: 5px; margin-top: 15px;">อัปโหลดรูปภาพใบเสร็จ (Slip):</label>
+                    <input type="file" id="topup-slip" accept="image/*" class="mc-input mb-2">
+                    
+                    <p id="topup-status" style="font-size: 13px; color: #F1C40F; margin-bottom: 10px; display: none;">กำลังเตรียมการสแกน...</p>
+                    <button id="topup-submit-btn" class="mc-btn-primary mt-2" onclick="handleTopupSubmit()">ส่งข้อมูลแจ้งเติมเงิน</button>
+                </div>
+            </section>
+
+            <section id="store" class="content-view info-paper hidden">
+                <button class="close-view-btn" onclick="switchView('home-view')">&times;</button>
+                <h2>ร้านค้าซื้อของ (Guild Shop)</h2>
+                <div class="paper-inner">
+                    <p class="text-center mb-2" style="color: #F1C40F;">ใช้เครดิตในบัญชีของคุณเพื่อเลือกซื้อไอเทมเริ่มต้นอารีน่า</p>
+                    
+                    <div class="shop-grid">
+                        <div class="shop-item-card">
+                            <div class="item-details">
+                                <h3><i class="fas fa-star" style="color: #E74C3C;"></i> Easy to Play</h3>
+                                <p>เซ็ตเริ่มต้นสำหรับผู้เล่นใหม่ ไม่ต้องหาของเอง</p>
+                            </div>
+                            <button class="mc-btn-primary shop-buy-btn" onclick="handleBuyItem('Easy to Play', 100)">
+                                <i class="fas fa-coins"></i> 100 เครดิต
+                            </button>
+                        </div>
+
+                        <div class="shop-item-card mt-2">
+                            <div class="item-details">
+                                <h3><i class="fas fa-shield-alt" style="color: #3498DB;"></i> ระบบป้องกัน 16 x 16</h3>
+                                <p>บล็อกป้องกันพื้นที่ส่วนตัว ปลอดภัยจากการรบกวน</p>
+                            </div>
+                            <button class="mc-btn-primary shop-buy-btn" onclick="handleBuyItem('ระบบป้องกัน 16 x 16', 200)">
+                                <i class="fas fa-coins"></i> 200 เครดิต
+                            </button>
+                        </div>
+                        
+                        <div class="shop-item-card mt-2 locked-item">
+                            <div class="item-details">
+                                <h3><i class="fas fa-lock"></i> ไอเทมใหม่เร็วๆ นี้</h3>
+                                <p>ติดตามอัปเดตระบบร้านค้าเพิ่มเติมได้ในอนาคต</p>
+                            </div>
+                            <button class="mc-btn-secondary shop-buy-btn" disabled>Soon</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="news" class="content-view info-paper hidden">
+                <button class="close-view-btn" onclick="switchView('home-view')">&times;</button>
+                <h2>ข่าวสาร & ติดตาม</h2>
+                <div class="paper-inner">
+                    <a href="#" target="_blank" class="social-btn mc-social">
+                        <span><i class="fab fa-facebook fb-color"></i> Facebook Page</span>
+                    </a>
+                    <a href="#" target="_blank" class="social-btn mc-social">
+                        <span><i class="fab fa-twitter tw-color"></i> Twitter / X</span>
+                    </a>
+                    <a href="#" target="_blank" class="social-btn mc-social">
+                        <span><i class="fab fa-discord dc-color"></i> Discord Community</span>
+                    </a>
+                    <a href="#" target="_blank" class="social-btn mc-social">
+                        <span><i class="fab fa-youtube yt-color"></i> Youtube Channel</span>
+                    </a>
+                </div>
+            </section>
+
+            <section id="profile-settings" class="content-view info-paper hidden">
+                <button class="close-view-btn" onclick="switchView('home-view')">&times;</button>
+                <h2>ระบบบัญชีผู้เล่น</h2>
+                <div class="paper-inner text-center">
+                    
+                    <div id="auth-container">
+                        <div class="tab-buttons flex-between mb-2" style="display: flex; margin-bottom: 15px;">
+                            <button class="mc-btn-primary" id="btn-tab-login" onclick="switchAuthTab('login')" style="margin-right: 5px; flex:1;">เข้าสู่ระบบ</button>
+                            <button class="mc-btn-secondary" id="btn-tab-register" onclick="switchAuthTab('register')" style="margin-left: 5px; flex:1;">สมัครบัญชี</button>
+                        </div>
+
+                        <div id="login-form">
+                            <input type="text" id="login-identifier" placeholder="ชื่อผู้เล่น หรือ อีเมล" class="mc-input mb-2">
+                            <input type="password" id="login-password" placeholder="รหัสผ่าน" class="mc-input mb-2">
+                            <button class="mc-btn-primary mb-2" onclick="handleLogin()">เข้าสู่ระบบ</button>
+                            <p style="font-size: 13px; margin-top: 10px;"><a href="#" onclick="switchAuthTab('forgot')" style="color: #F1C40F; text-decoration: none;">ลืมรหัสผ่านใช่ไหม?</a></p>
+                        </div>
+
+                        <div id="register-form" class="hidden">
+                            <input type="text" id="reg-username" placeholder="ชื่อผู้เล่น (Username)" class="mc-input mb-2">
+                            <input type="email" id="reg-email" placeholder="อีเมล (Email)" class="mc-input mb-2">
+                            <input type="password" id="reg-password" placeholder="รหัสผ่าน (Password)" class="mc-input mb-2">
+                            <button class="mc-btn-primary" onclick="handleRegister()">สมัครสมาชิกใหม่</button>
+                        </div>
+
+                        <div id="forgot-form" class="hidden">
+                            <p style="font-size: 14px; color: var(--mc-light-gray); margin-bottom: 15px; text-align: left; line-height: 1.4;">ระบุไอดีหรืออีเมลที่ใช้สมัคร และเลือกอีเมลที่จะรับรหัส OTP รีเซ็ต</p>
+                            <input type="text" id="forgot-identifier" placeholder="ชื่อผู้เล่น หรือ อีเมลเดิม" class="mc-input mb-2">
+                            <input type="email" id="forgot-target-email" placeholder="อีเมลที่จะรับรหัส OTP" class="mc-input mb-2">
+                            <button class="mc-btn-primary mb-2" onclick="handleRequestOTP()">ขอรหัส OTP</button>
+                            <p style="font-size: 13px; margin-top: 10px;"><a href="#" onclick="switchAuthTab('login')" style="color: var(--mc-light-gray); text-decoration: none;">ย้อนกลับหน้าเข้าสู่ระบบ</a></p>
+                        </div>
+
+                        <div id="otp-verify-form" class="hidden">
+                            <p id="otp-status-text" style="font-size: 14px; color: #F1C40F; margin-bottom: 15px; text-align: left; line-height: 1.4;"></p>
+                            <input type="text" id="otp-input" placeholder="กรอกรหัส OTP 6 หลัก" class="mc-input mb-2" maxlength="6">
+                            <input type="password" id="otp-new-password" placeholder="กำหนดรหัสผ่านใหม่" class="mc-input mb-2">
+                            <button class="mc-btn-primary mb-2" onclick="handleVerifyOTPAndReset()">ยืนยันรีเซ็ตรหัสผ่าน</button>
+                        </div>
+                    </div>
+
+                    <div id="user-profile-container" class="hidden">
+                        <img src="po.jpeg" id="profile-avatar-display" alt="Profile" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 3px solid #555;">
+                        <h3 id="display-username">PlayerName</h3>
+                        <p id="display-email" style="color: var(--mc-light-gray); font-size: 14px; margin-bottom: 15px;"></p>
+                        
+                        <hr class="mc-divider">
+                        
+                        <div style="text-align: left; margin-bottom: 20px;">
+                            <label style="color: var(--mc-white); font-size: 14px; display:block; margin-bottom: 5px;">เปลี่ยนชื่อผู้เล่น:</label>
+                            <input type="text" id="edit-username" class="mc-input mb-2" placeholder="กรอกชื่อผู้เล่นใหม่">
+                            
+                            <label style="color: var(--mc-white); font-size: 14px; display:block; margin-bottom: 5px; margin-top: 10px;">
+                                เปลี่ยนรูปโปรไฟล์: <span style="color: #F1C40F; font-size: 12px;">(ไม่เกิน 500x500 px)</span>
+                            </label>
+                            <input type="file" id="edit-avatar" accept="image/*" class="mc-input mb-2">
+                            
+                            <button class="mc-btn-primary mt-2" onclick="handleProfileChange()">บันทึกการเปลี่ยนแปลง</button>
+                        </div>
+                        
+                        <hr class="mc-divider">
+                        <div class="flex-between">
+                            <span>เสียงเพลง (Music)</span>
+                            <input type="checkbox" id="sound-toggle" checked>
+                        </div>
+                        <hr class="mc-divider">
+                        <button class="mc-btn-secondary" onclick="handleLogout()">ออกจากระบบ</button>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="ending-preview-modal" class="content-view info-paper hidden">
+                <button class="close-view-btn" onclick="switchView('home-view')">&times;</button>
+                <h2>Ending Preview</h2>
+                <div class="paper-inner text-center">
+                    <i class="fas fa-construction fa-3x mb-2" style="color:#F1C40F;"></i>
+                    <p>นี่คือ <strong>ending preview</strong> เท่านั้น ในการทดสอบแสดงผล<br>และนี่ยังไม่ใช่ endingจริงเพราะว่ามันยังไม่จบ 55+</p>
+                    <button onclick="navigateGame('endcredit.html')" class="mc-btn-secondary mt-2">ดู preview</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <audio id="bgm-opening" src="openingonwebsite.mp3" loop preload="auto"></audio> 
+    <audio id="bgm-hub" src="menu_theme.mp3" loop preload="auto"></audio>
+    <audio id="sfx-click" src="click.wav" preload="auto"></audio>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBDiT-gMOO9Upmv7UYqEQWO2Ss0W0qHG_Q",
+        authDomain: "minecraft-server-4dba8.firebaseapp.com",
+        projectId: "minecraft-server-4dba8",
+        storageBucket: "minecraft-server-4dba8.firebasestorage.app",
+        messagingSenderId: "916998691110",
+        appId: "1:916998691110:web:791c5eec641502397e49e7",
+        measurementId: "G-MXMJ7185MW"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
